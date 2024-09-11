@@ -29,9 +29,9 @@ class State:
   # 객체를 출력할 때 사용한다. 
   def __str__(self):
     return str(self.board[:3]) +"\n"+\
-    str(self.board[3:6]) +"\n"+\
-    str(self.board[6:]) +"\n"+\
-    "------------------"
+        str(self.board[3:6]) +"\n"+\
+        str(self.board[6:]) +"\n"+\
+        "------------------"
 
   def __eq__(self, other):			# 이것을 정의해야 in 연산자가 올바르게 계산한다.
     return self.board == other.board
@@ -67,8 +67,10 @@ open_queue.append(State(puzzle, goal))
 closed_queue = [ ]
 depth = 0
 
-find_depth = 0
 count=1
+
+find_depth = 0
+root = State(puzzle,goal)
 
 while len(open_queue) != 0: 
   current = open_queue.pop(0)			# OPEN 리스트의 앞에서 삭제
@@ -87,6 +89,8 @@ while len(open_queue) != 0:
       closed_queue = []
       depth = 0
       find_depth+=1         # 깊이 추가
+      continue
+  if depth > 5:
       continue
   for state in current.expand(depth):
       if (state in closed_queue) or (state in open_queue):	# 이미 거쳐간 노드이면
